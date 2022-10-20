@@ -1,0 +1,3 @@
+[submodule "RazorTdesign/wwwroot/_common"]
+	path = RazorTdesign/wwwroot/_common
+	url = git@github.com:Tencent/tdesign-common.git
