@@ -1,0 +1,10 @@
+[
+  {
+    "outputFileName": "wwwroot/css/tdesign.blazor.bundle.min.css",
+    "inputFiles": [
+      "wwwroot/tdesign/global.css",
+      "wwwroot/tdesign/reset.css",
+      "wwwroot/tdesign/theme.css"
+    ]
+  }
+]

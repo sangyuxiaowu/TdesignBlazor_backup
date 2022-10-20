@@ -1,0 +1,26 @@
+:root {
+  --td-screen-xs: 320px;
+  --td-screen-sm: 768px;
+  --td-screen-md: 992px;
+  --td-screen-lg: 1200px;
+  --td-screen-xl: 1400px;
+  --td-screen-xxl: 1880px;
+}
+.narrow-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+.narrow-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: var(--td-radius-medium);
+  border: 2px solid transparent;
+  background-clip: content-box;
+  background-color: var(--td-scrollbar-color);
+}
+.t-fake-arrow path {
+  transition: d 0.2s;
+  stroke: currentcolor;
+}
+.t-fake-arrow--active path {
+  d: path("M3.75 10.2002L7.99274 5.7998L12.2361 10.0425");
+}
