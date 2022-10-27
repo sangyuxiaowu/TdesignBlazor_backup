@@ -1,7 +1,9 @@
 ﻿@namespace RazorTdesign.Components
 
-<button type="@ButtonType.ToDescriptionString()" id="@Id" class="@ClassName" disabled="@Disabled" @onclick="@OnClickButton">
-
+<button type="@ButtonType.ToDescriptionString()" id="@Id" class="@ClassName" disabled="@Disabled" @onclick="@OnClick">
+    <CascadingValue Value="this" IsFixed="true">
+        @ChildContent
+    </CascadingValue>
 </button>
 
 @code {
@@ -13,6 +15,9 @@
         .AddClass("t-size-full-width", IsBlock)
         .AddClass("t-is-disabled", IsDisabled)
         .AddClass($"t-size-{Size.ToDescriptionString()}", Size != Size.None)
+        .AddClass($"t-button--shape-{ButtonShape.ToDescriptionString()}", ButtonShape != ButtonShape.Rectangle)
+        .AddClass($"t-button--theme-{Color.ToDescriptionString()}")
+        .AddClass($"t-button--variant-{ButtonVariant.ToDescriptionString()}")
         .Build();
 
     /// <summary>
@@ -59,21 +64,53 @@
     public Size Size { get; set; } = Size.None;
 
     /// <summary>
+    /// 获得/设置 按钮 Shape
+    /// </summary>
+    [Parameter]
+    public ButtonShape ButtonShape { get; set; } = ButtonShape.Rectangle;
+
+    /// <summary>
+    /// 获得/设置 按钮颜色
+    /// </summary>
+    [Parameter]
+    public virtual Color Color { get; set; } = Color.Primary;
+
+    /// <summary>
+    /// 获得/设置 按钮按钮形式枚举
+    /// </summary>
+    [Parameter]
+    public ButtonVariant ButtonVariant { get; set; }
+
+    /// <summary>
     /// 获得/设置 显示文字
     /// </summary>
     [Parameter]
     public string? Text { get; set; }
 
+    /// <summary>
+    /// 获得/设置 RenderFragment 实例
+    /// </summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
     /// <summary>
     /// 获得/设置 是否为异步按钮，默认为 false 如果为 true 表示是异步按钮，点击按钮后禁用自身并且等待异步完成，过程中显示 loading 动画
     /// </summary>
     [Parameter]
     public bool IsAsync { get; set; }
-    /// <summary>
-    /// 按钮点击回调方法，内置支持 IsAsync 开关
-    /// </summary>
-    protected EventCallback<MouseEventArgs> OnClickButton { get; set; }
 
+    /// <summary>
+    /// 获得/设置 OnClick 事件
+    /// </summary>
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    protected virtual async Task HandlerClick()
+    {
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
 
 }

@@ -7,4 +7,26 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
-<Button></Button>
+
+<label>shape</label>
+<select id="shape" @onchange="ButtonShapeChange">
+    @foreach (var aType in Enum.GetValues(typeof(ButtonShape)))
+    {
+        <option value="@Convert.ToInt32(aType)">@aType</option>
+    }
+</select>
+
+<Button @onclick="Test" Color="color" ButtonShape="shape">111</Button>
+
+@code{
+    private Color color = Color.Default;
+    private ButtonShape shape = ButtonShape.Rectangle;
+    private void Test(){
+        Console.WriteLine("test");
+        color = Color.Warning;
+    }
+    private void ButtonShapeChange(ChangeEventArgs e)
+    {
+        shape = (ButtonShape)Convert.ToInt32(e.Value);
+    }
+}
